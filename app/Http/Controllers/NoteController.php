@@ -25,7 +25,10 @@ class NoteController extends Controller
 		$created = time();
 		$result = DB::table('note')->insert(['note'=>$note, 'mark'=>$mark, 'created'=>$created]);
 		if ($result)
-			echo '添加成功';
+			return response('添加成功')
+            ->withHeaders([
+				'Access-Control-Allow-Origin' => 'http://note.coolhand.vip',
+			]);
 	}
 
 	public function edit(Request $request)
