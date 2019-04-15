@@ -16,7 +16,7 @@ class Note extends Migration
 		Schema::create('note', function (Blueprint $table) {
             //$table->primary('id');
             $table->unsignedMediumInteger('id', true);
-            $table->string('title', 300);
+            $table->string('note', 300);
             $table->string('mark', 2000);
             $table->unsignedInteger('created');
 		}

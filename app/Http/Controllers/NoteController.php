@@ -21,6 +21,7 @@ class NoteController extends Controller
 	{
 		$note = $request->get('note');
 		$mark = $request->get('mark');
-		DB::table('note')->insert();
+		$created = time();
+		DB::table('note')->insert(['note'=>$note, 'mark'=>$mark, 'created'=>$created]);
 	}
 }
