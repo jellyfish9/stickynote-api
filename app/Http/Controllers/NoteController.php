@@ -19,7 +19,7 @@ class NoteController extends Controller
     }
 	public function add(Request $request)
 	{
-		$request->validate(['note'=>'required|string','mark'=>'required|string']);
+		//$request->validate(['note'=>'required|string','mark'=>'required|string']);
 		$note = $request->get('note');
 		$mark = $request->get('mark');
 		$created = time();
@@ -29,7 +29,7 @@ class NoteController extends Controller
             ->withHeaders([
 				'Access-Control-Allow-Origin' => 'http://note.coolhand.vip',
 				'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS',
-				'Access-Control-Allow-Headers' => 'X-PINGOTHER, Content-Type',
+				'Access-Control-Allow-Headers' => 'Origin, Content-Type',
 				'Access-Control-Max-Age' => 86400,
 			]);
 	}
