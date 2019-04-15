@@ -19,9 +19,20 @@ class NoteController extends Controller
     }
 	public function add(Request $request)
 	{
+		$request->validate(['note'=>'required|string','mark'=>'required|string']);
 		$note = $request->get('note');
 		$mark = $request->get('mark');
 		$created = time();
-		DB::table('note')->insert(['note'=>$note, 'mark'=>$mark, 'created'=>$created]);
+		$result = DB::table('note')->insert(['note'=>$note, 'mark'=>$mark, 'created'=>$created]);
+		if ($result)
+			echo '添加成功';
+	}
+
+	public function edit(Request $request)
+	{
+	}
+
+	public function show(Request $request)
+	{
 	}
 }
