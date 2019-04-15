@@ -1,2 +1,2 @@
 # stickynote-api
-便笺api
+便笺api (lumen)
