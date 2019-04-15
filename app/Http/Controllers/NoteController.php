@@ -28,6 +28,9 @@ class NoteController extends Controller
 			return response('添加成功')
             ->withHeaders([
 				'Access-Control-Allow-Origin' => 'http://note.coolhand.vip',
+				'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS',
+				'Access-Control-Allow-Headers' => 'X-PINGOTHER, Content-Type',
+				'Access-Control-Max-Age' => 86400,
 			]);
 	}
 
