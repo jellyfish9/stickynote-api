@@ -11,10 +11,8 @@
 |
 */
 
-$router->get('/', function () use ($router) {
+$router->get('/index', function () use ($router) {
     return $router->app->version();
 });
-$router->get('/note_list', 'NoteController@get_note_list');
-$router->get('/note_add', 'NoteController@add');
 
 
