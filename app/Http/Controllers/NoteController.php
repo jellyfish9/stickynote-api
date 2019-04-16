@@ -47,7 +47,13 @@ class NoteController extends Controller
 	{
 	}
 
-	public function show(Request $request)
+	public function show($id, Request $request)
 	{
+		//$id = $request->get('id');
+		$data = DB::table('note')
+			->select('note', 'mark')
+			->where('id', $id)
+			->first();
+		return response()->json($data);
 	}
 }
