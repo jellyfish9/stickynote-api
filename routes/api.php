@@ -7,6 +7,7 @@ $router->group([
     $router->options('/{path:.*}', function ($path) {});
     $router->get('/note_list', 'NoteController@get_note_list');
 	$router->post('/note_add', 'NoteController@add');
+	$router->post('/note_edit/{id}', 'NoteController@edit');
 	$router->get('/note_show/{id}', 'NoteController@show');
 
 });

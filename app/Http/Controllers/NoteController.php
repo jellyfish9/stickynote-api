@@ -43,8 +43,16 @@ class NoteController extends Controller
 		}
 	}
 
-	public function edit(Request $request)
+	public function edit($id, Request $request)
 	{
+		$note = $request->get('note');
+		$mark = $request->get('mark');
+		$result = DB::table('note')
+			->where('id', $id)
+			->update(['note'=>$note, 'mark'=>$mark]);
+		if ($result) {
+			return response('修改成功');
+		}
 	}
 
 	public function show($id, Request $request)
