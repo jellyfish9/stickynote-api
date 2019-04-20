@@ -18,6 +18,7 @@ class Note extends Migration
             $table->unsignedMediumInteger('id', true);
             $table->string('note', 300);
             $table->string('mark', 2000);
+			$table->string('tag', 60);
             $table->unsignedInteger('created');
 		}
 		);

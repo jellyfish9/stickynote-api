@@ -64,4 +64,16 @@ class NoteController extends Controller
 			->first();
 		return response()->json($data);
 	}
+	public function search(Request $request)
+	{
+		$tag = $request->get('tag');
+		$kw = $request->get('kw');
+		$data = DB::table('note')
+			->select('id', 'note', 'mark')
+			->where('note', 'like', "%$kw%");
+		// fulltext
+		if ('' != $tag) {
+			
+		}
+	}
 }
