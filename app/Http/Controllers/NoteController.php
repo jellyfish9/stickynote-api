@@ -73,7 +73,9 @@ class NoteController extends Controller
 			->where('note', 'like', "%$kw%");
 		// fulltext
 		if ('' != $tag) {
-			
+			;
+		} else {
+			return response()->json($data->get());
 		}
 	}
 }
