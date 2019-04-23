@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 //use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Redis;
 
 class NoteController extends Controller
 {
@@ -66,6 +67,8 @@ class NoteController extends Controller
 	}
 	public function search(Request $request)
 	{
+		$values = Redis::get('name');
+		var_dump($values);
 		$tag = $request->get('tag');
 		$kw = $request->get('kw');
 		$data = DB::table('note')
