@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 //use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 class NoteController extends Controller
 {
@@ -33,12 +33,21 @@ class NoteController extends Controller
 				'Access-Control-Max-Age' => 86400,
 			]);
 		*/
+		$tag = $request->get('tag');
+		
 		$note = $request->get('note');
 		$mark = $request->get('mark');
+		
 		$created = time();
-		$result = DB::table('note')->insert(['note'=>$note, 'mark'=>$mark, 'created'=>$created]);
-		if ($result) {
+		$insertId = DB::table('note')->insertGetId(['note'=>$note, 'mark'=>$mark, 'created'=>$created]);
+		if ($insertId) {
 			return response('添加成功');
+			if ('' != $tag) {
+				$tags = explode(',', $tag);
+				foreach ($tags as $tag) {
+					Redis::executeRaw(['sadd', 'note:tag:'.$tag, $insertId]);
+				}
+			}
 		} else {
 			return response('添加失败');
 		}
@@ -67,9 +76,14 @@ class NoteController extends Controller
 	}
 	public function search(Request $request)
 	{
-		$values = Cache::get('name');
-		var_dump($values);
+		//$isok = Redis::exists('tag_linux');
+
 		$tag = $request->get('tag');
+		$wrappedTag = 'note:tag:'.$tag;
+		if (Redis::exists($wrappedTag) {
+			$note_ids = Redis::executeRaw(['smembers', $wrappedTag]);
+			var_dump($note_ids);
+		}
 		$kw = $request->get('kw');
 		$data = DB::table('note')
 			->select('id', 'note', 'mark')
