@@ -98,4 +98,6 @@ $app->router->group([
 	require __DIR__.'/../routes/api.php';
 });
 
+$app->configure('database');
+
 return $app;
