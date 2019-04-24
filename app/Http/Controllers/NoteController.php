@@ -90,7 +90,7 @@ class NoteController extends Controller
 		$arr = [];
 		foreach ($tags as $tag) {
 			if (Redis::executeRaw(['sismember', $tag, $id])) {
-				array_push($arr, $tag);
+				array_push($arr, str_replace('note:tag:','',$tag));
 			}
 		}
 		$data->tag = implode(',', $arr);
