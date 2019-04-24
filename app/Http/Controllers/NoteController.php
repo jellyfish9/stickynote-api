@@ -92,12 +92,14 @@ class NoteController extends Controller
 		$kw = $request->get('kw');
 		$data = DB::table('note')
 			->select('id', 'note', 'mark');
+		
+		if (!empty($note_ids)) {
+			$data = $data->whereIn('id', $note_ids);
+		}
 		if ('' != $kw) {
 			$data = $data->where('note', 'like', "%$kw%");
 		}
-		if (!empty($note_ids)) {
-			$data = $data->whereIn('note', $note_ids);
-		}
+		
 		return response()->json($data->get());
 	}
 }
