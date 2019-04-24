@@ -71,11 +71,13 @@ class NoteController extends Controller
 		}
 		$note = $request->get('note');
 		$mark = $request->get('mark');
-		$result = DB::table('note')
-			->where('id', $id)
-			->update(['note'=>$note, 'mark'=>$mark]);
-		if ($result) {
+		try {
+			$result = DB::table('note')
+				->where('id', $id)
+				->update(['note'=>$note, 'mark'=>$mark]);
 			return response('修改成功');
+		} catch(Exception $e) {
+			return response($e->message);
 		}
 	}
 
