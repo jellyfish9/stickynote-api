@@ -39,7 +39,6 @@ class NoteController extends Controller
 			]);
 		*/
 		$tag = $request->get('tag');
-		
 		$note = $request->get('note');
 		$mark = $request->get('mark');
 		
@@ -61,6 +60,13 @@ class NoteController extends Controller
 
 	public function edit($id, Request $request)
 	{
+		$tag = $request->get('tag');
+		if ('' != $tag) {
+			$tags = explode(',', $tag);
+			foreach ($tags as $tag) {
+				Redis::executeRaw(['sadd', 'note:tag:'.$tag, $id]);
+			}
+		}
 		$note = $request->get('note');
 		$mark = $request->get('mark');
 		$result = DB::table('note')
@@ -78,6 +84,14 @@ class NoteController extends Controller
 			->select('note', 'mark')
 			->where('id', $id)
 			->first();
+		$tags = $this->tags();
+		$arr = [];
+		foreach ($tags as $tag) {
+			if (Redis::executeRaw(['sismember', 'note:tag:'.$tag, $id])) {
+				array_push($arr, $tag);
+			}
+		}
+		$data['tag'] = implode(',', $arr);
 		return response()->json($data);
 	}
 	public function search(Request $request)
