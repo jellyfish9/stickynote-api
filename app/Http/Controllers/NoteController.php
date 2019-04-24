@@ -81,7 +81,7 @@ class NoteController extends Controller
 
 		$tag = $request->get('tag');
 		$wrappedTag = 'note:tag:'.$tag;
-		if (Redis::exists($wrappedTag) {
+		if (Redis::exists($wrappedTag)) {
 			$note_ids = Redis::executeRaw(['smembers', $wrappedTag]);
 			var_dump($note_ids);
 		}
