@@ -41,13 +41,14 @@ class NoteController extends Controller
 		$created = time();
 		$insertId = DB::table('note')->insertGetId(['note'=>$note, 'mark'=>$mark, 'created'=>$created]);
 		if ($insertId) {
-			return response('添加成功');
+			
 			if ('' != $tag) {
 				$tags = explode(',', $tag);
 				foreach ($tags as $tag) {
 					Redis::executeRaw(['sadd', 'note:tag:'.$tag, $insertId]);
 				}
 			}
+			return response('添加成功');
 		} else {
 			return response('添加失败');
 		}
