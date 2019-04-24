@@ -10,5 +10,6 @@ $router->group([
 	$router->post('/note_edit/{id}', 'NoteController@edit');
 	$router->get('/note_show/{id}', 'NoteController@show');
 	$router->get('/note_search', 'NoteController@search');
+	$router->get('/note_tags', 'NoteController@tags');
 
 });

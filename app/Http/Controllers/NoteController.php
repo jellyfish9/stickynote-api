@@ -19,6 +19,11 @@ class NoteController extends Controller
 			->get();
         return response()->json($data);
     }
+	public function tags()
+	{
+		$tags = Redis::executeRaw(['keys', 'note:tag:*']);
+		return response()->json(array_map(function($t){ return str_replace('note:tag:','',$t);}, $tags));
+	}
 	public function add(Request $request)
 	{
 		//$request->validate(['note'=>'required|string','mark'=>'required|string']);
