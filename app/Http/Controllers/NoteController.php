@@ -93,7 +93,7 @@ class NoteController extends Controller
 				array_push($arr, $tag);
 			}
 		}
-		$data['tag'] = implode(',', $arr);
+		$data->tag = implode(',', $arr);
 		return response()->json($data);
 	}
 	public function search(Request $request)
