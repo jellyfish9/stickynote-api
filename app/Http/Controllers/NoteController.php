@@ -96,7 +96,7 @@ class NoteController extends Controller
 			$data = $data->where('note', 'like', "%$kw%");
 		}
 		if (!empty($note_ids)) {
-			$data = $data->where('note', 'in', $note_ids);
+			$data = $data->whereIn('note', $note_ids);
 		}
 		return response()->json($data->get());
 	}
