@@ -30,16 +30,6 @@ class NoteController extends Controller
 	{
 		//$request->validate(['note'=>'required|string','mark'=>'required|string']);
 	
-		/*
-            ->withHeaders([
-				'Access-Control-Allow-Origin' => '*',
-				'Access-Control-Allow-Methods' => 'GET, POST, PATCH, PUT, OPTIONS',
-				'Access-Control-Expose-Headers' => 'Authorization,authenticated',
-				'Access-Control-Allow-Headers' => 'Origin, Content-Type, Cookie,X-CSRF-TOKEN, Accept,Authorization',
-				'Access-Control-Allow-Credentials' => 'true',
-				'Access-Control-Max-Age' => 86400,
-			]);
-		*/
 		$tag = $request->get('tag');
 		$note = $request->get('note');
 		$mark = $request->get('mark');
