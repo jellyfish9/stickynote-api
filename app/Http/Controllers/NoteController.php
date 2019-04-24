@@ -86,19 +86,18 @@ class NoteController extends Controller
 
 		$tag = $request->get('tag');
 		$wrappedTag = 'note:tag:'.$tag;
-		if (Redis::exists($wrappedTag)) {
+		if ('' != $tag && Redis::exists($wrappedTag)) {
 			$note_ids = Redis::executeRaw(['smembers', $wrappedTag]);
-			var_dump($note_ids);
 		}
 		$kw = $request->get('kw');
 		$data = DB::table('note')
-			->select('id', 'note', 'mark')
-			->where('note', 'like', "%$kw%");
-		// fulltext
-		if ('' != $tag) {
-			;
-		} else {
-			return response()->json($data->get());
+			->select('id', 'note', 'mark');
+		if ('' != $kw) {
+			$data = $data->where('note', 'like', "%$kw%");
 		}
+		if (!empty($note_ids)) {
+			$data = $data->where('note', 'in', $note_ids);
+		}
+		return response()->json($data->get());
 	}
 }
