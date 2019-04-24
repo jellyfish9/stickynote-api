@@ -66,7 +66,7 @@ class NoteController extends Controller
 		if ('' != $tag) {
 			$tags = explode(',', $tag);
 			foreach ($tags as $tag) {
-				Redis::executeRaw(['sadd', $tag, $id]);
+				Redis::executeRaw(['sadd', 'note:tag:'.$tag, $id]);
 			}
 		}
 		$note = $request->get('note');
