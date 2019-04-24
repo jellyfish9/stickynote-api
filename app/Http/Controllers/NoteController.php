@@ -19,9 +19,11 @@ class NoteController extends Controller
 			->get();
         return response()->json($data);
     }
-	public function tags()
+	public function tags($pure = false)
 	{
 		$tags = Redis::executeRaw(['keys', 'note:tag:*']);
+		if ($pure)
+			return $tags;
 		return response()->json(array_map(function($t){ return str_replace('note:tag:','',$t);}, $tags));
 	}
 	public function add(Request $request)
@@ -64,7 +66,7 @@ class NoteController extends Controller
 		if ('' != $tag) {
 			$tags = explode(',', $tag);
 			foreach ($tags as $tag) {
-				Redis::executeRaw(['sadd', 'note:tag:'.$tag, $id]);
+				Redis::executeRaw(['sadd', $tag, $id]);
 			}
 		}
 		$note = $request->get('note');
@@ -84,7 +86,7 @@ class NoteController extends Controller
 			->select('note', 'mark')
 			->where('id', $id)
 			->first();
-		$tags = $this->tags();
+		$tags = $this->tags(true);
 		$arr = [];
 		foreach ($tags as $tag) {
 			if (Redis::executeRaw(['sismember', 'note:tag:'.$tag, $id])) {
