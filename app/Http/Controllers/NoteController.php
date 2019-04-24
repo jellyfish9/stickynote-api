@@ -89,7 +89,7 @@ class NoteController extends Controller
 		$tags = $this->tags(true);
 		$arr = [];
 		foreach ($tags as $tag) {
-			if (Redis::executeRaw(['sismember', 'note:tag:'.$tag, $id])) {
+			if (Redis::executeRaw(['sismember', $tag, $id])) {
 				array_push($arr, $tag);
 			}
 		}
